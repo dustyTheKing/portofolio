@@ -1,6 +1,7 @@
+import { useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
-import { BsArrowRight } from "react-icons/bs";
+import { BsSearch } from "react-icons/bs";
+import { IoClose } from "react-icons/io5";
 import { Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -13,48 +14,48 @@ const workSlides = {
     {
       images: [
         {
-          title: "title",
-          path: "/thumb1.jpg",
-          link: "http://example.com",
+          title: "CloudResto OS",
+          description: "Integrated Restaurant System",
+          path: "/cloudresto.jpg",
         },
         {
-          title: "title",
-          path: "/thumb2.jpg",
-          link: "http://example.com",
+          title: "E-PJOK Portal",
+          description: "Guru & Student Learning Portal",
+          path: "/pjok.jpg",
         },
         {
-          title: "title",
-          path: "/thumb3.jpg",
-          link: "http://example.com",
+          title: "Jasindo Syariah",
+          description: "Agent OS & Admin Portal",
+          path: "/jasindo.jpg",
         },
         {
-          title: "title",
-          path: "/thumb4.jpg",
-          link: "http://example.com",
+          title: "Persuratan UGM",
+          description: "Academic Management System",
+          path: "/ugm.png",
         },
       ],
     },
     {
       images: [
         {
-          title: "title",
-          path: "/thumb4.jpg",
-          link: "http://example.com",
+          title: "PLN System",
+          description: "ICON Management System",
+          path: "/pln.png",
         },
         {
-          title: "title",
-          path: "/thumb1.jpg",
-          link: "http://example.com",
+          title: "Kicktime",
+          description: "Booking & Match App",
+          path: "/kicktime.png",
         },
         {
-          title: "title",
-          path: "/thumb2.jpg",
-          link: "http://example.com",
+          title: "Keuangan IT",
+          description: "Financial Tracker",
+          path: "/keuanganIT.png",
         },
         {
-          title: "title",
-          path: "/thumb3.jpg",
-          link: "http://example.com",
+          title: "BNI App",
+          description: "Scaning NEW Rekening",
+          path: "/bni.png",
         },
       ],
     },
@@ -62,65 +63,107 @@ const workSlides = {
 };
 
 const WorkSlider = () => {
+  // State untuk zoom preview lightbox
+  const [selectedImage, setSelectedImage] = useState(null);
+
   return (
-    <Swiper
-      spaceBetween={10}
-      pagination={{
-        clickable: true,
-      }}
-      modules={[Pagination]}
-      className="h-[280px] sm:h-[480px]"
-    >
-      {workSlides.slides.map((slide, i) => (
-        <SwiperSlide key={i}>
-          <div className="grid grid-cols-2 grid-rows-2 gap-4">
-            {slide.images.map((image, imageI) => (
-              <div
-                className="relative rounded-lg overflow-hidden flex items-center justify-center group"
-                key={imageI}
-              >
-                <div className="flex items-center justify-center relative overflow-hidden group">
-                  {/* image */}
-                  <Image
-                    src={image.path}
-                    alt={image.title}
-                    width={500}
-                    height={300}
-                  />
+    <>
+      <Swiper
+        spaceBetween={10}
+        pagination={{
+          clickable: true,
+        }}
+        modules={[Pagination]}
+        className="h-[280px] sm:h-[480px]"
+      >
+        {workSlides.slides.map((slide, i) => (
+          <SwiperSlide key={i}>
+            <div className="grid grid-cols-2 grid-rows-2 gap-4 h-full">
+              {slide.images.map((image, imageI) => (
+                <div
+                  className="relative rounded-lg overflow-hidden flex items-center justify-center group h-full w-full bg-secondary/20 cursor-pointer"
+                  key={imageI}
+                  onClick={() => setSelectedImage(image)}
+                >
+                  <div className="flex items-center justify-center relative overflow-hidden group w-full h-full">
+                    {/* Image dengan object-cover */}
+                    <Image
+                      src={image.path}
+                      alt={image.title}
+                      width={500}
+                      height={300}
+                      className="w-full h-full object-cover object-center group-hover:scale-105 transition-all duration-500"
+                    />
 
-                  {/* overlay gradient */}
-                  <div
-                    className="absolute inset-0 bg-gradient-to-l from-transparent via-[#e838cc] to-[#4a22bd] opacity-0 group-hover:opacity-80 transition-all duration-700"
-                    aria-hidden
-                  />
+                    {/* Overlay Gradient */}
+                    <div
+                      className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-90 transition-all duration-500"
+                      aria-hidden
+                    />
 
-                  {/* title */}
-                  <div className="absolute bottom-0 translate-y-full group-hover:-translate-y-10 group-hover:xl:-translate-y-20 transition-all duration-300">
-                    <Link
-                      href={image.link}
-                      target="_blank"
-                      rel="noreferrer noopener"
-                      className="flex items-center gap-x-2 text-[13px] tracking-[0.2em]"
+                    {/* Icon Zoom di Kanan Atas */}
+                    <div
+                      className="absolute top-3 right-3 p-2 bg-black/60 rounded-full text-white opacity-0 group-hover:opacity-100 transition-all duration-300 z-20"
+                      title="Klik untuk Zoom"
                     >
-                      {/* title part 1 */}
-                      <div className="delay-100">LIVE</div>
-                      {/* title part 2 */}
-                      <div className="translate-y-[500%] group-hover:translate-y-0 transition-all duration-300 delay-150">
-                        PROJECT
-                      </div>
-                      {/* icon */}
-                      <div className="text-xl translate-y-[500%] group-hover:translate-y-0 transition-all duration-300 delay-150">
-                        <BsArrowRight aria-hidden />
-                      </div>
-                    </Link>
+                      <BsSearch className="text-sm" />
+                    </div>
+
+                    {/* Title & Description Overlay */}
+                    <div className="absolute inset-0 flex flex-col justify-end p-4 sm:p-6 opacity-0 group-hover:opacity-100 transition-all duration-300 z-10 pointer-events-none">
+                      <h3 className="text-white text-sm sm:text-lg font-bold translate-y-3 group-hover:translate-y-0 transition-all duration-300 delay-75">
+                        {image.title}
+                      </h3>
+
+                      <p className="text-gray-300 text-[11px] sm:text-xs translate-y-3 group-hover:translate-y-0 transition-all duration-300 delay-100">
+                        {image.description}
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
+          </SwiperSlide>
+        ))}
+      </Swiper>
+
+      {/* Pop-up Modal Zoom */}
+      {selectedImage && (
+        <div 
+          className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4"
+          onClick={() => setSelectedImage(null)}
+        >
+          <div 
+            className="relative max-w-4xl w-full max-h-[90vh] bg-black/40 rounded-xl overflow-hidden p-2 border border-white/10"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Tombol Close */}
+            <button
+              onClick={() => setSelectedImage(null)}
+              className="absolute top-4 right-4 z-10 p-2 bg-black/70 hover:bg-black rounded-full text-white transition-all"
+            >
+              <IoClose className="text-2xl" />
+            </button>
+
+            {/* Display Gambar Full */}
+            <div className="relative w-full h-[70vh]">
+              <Image
+                src={selectedImage.path}
+                alt={selectedImage.title}
+                fill
+                className="object-contain"
+              />
+            </div>
+
+            {/* Info Keterangan Gambar */}
+            <div className="p-4 text-center">
+              <h4 className="text-lg font-bold text-white">{selectedImage.title}</h4>
+              <p className="text-sm text-gray-300">{selectedImage.description}</p>
+            </div>
           </div>
-        </SwiperSlide>
-      ))}
-    </Swiper>
+        </div>
+      )}
+    </>
   );
 };
 

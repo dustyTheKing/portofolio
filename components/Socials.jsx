@@ -4,9 +4,8 @@ import {
   RiYoutubeLine,
   RiInstagramLine,
   RiFacebookLine,
-  RiDribbbleLine,
   RiGithubLine,
-  RiPinterestLine,
+  RiTiktokFill,
 } from "react-icons/ri";
 
 export const socialData = [
@@ -17,7 +16,7 @@ export const socialData = [
   },
   {
     name: "Instagram",
-    link: "https://instagram.com",
+    link: "https://www.instagram.com/muhammad_dista/",
     Icon: RiInstagramLine,
   },
   {
@@ -26,25 +25,20 @@ export const socialData = [
     Icon: RiFacebookLine,
   },
   {
-    name: "Dribbble",
-    link: "https://dribbble.com",
-    Icon: RiDribbbleLine,
-  },
-  {
-    name: "Pinterest",
-    link: "https://pinterest.com",
-    Icon: RiPinterestLine,
+    name: "Tiktok",
+    link: "https://www.tiktok.com/@dustyyow?_t=ZS-8u7W16BX2aP&_r=1",
+    Icon: RiTiktokFill,
   },
   {
     name: "Github",
-    link: "https://github.com/sanidhyy/modern-portfolio",
+    link: "https://github.com/dustyTheKing",
     Icon: RiGithubLine,
   },
 ];
 
 const Socials = () => {
   return (
-    <div className="flex items-center gap-x-5 text-lg">
+    <div className="flex items-center gap-x-3.5 sm:gap-x-5 text-base sm:text-lg">
       {socialData.map((social, i) => (
         <Link
           key={i}
@@ -54,9 +48,9 @@ const Socials = () => {
           rel="noreferrer noopener"
           className={`${
             social.name === "Github"
-              ? "bg-accent rounded-full p-[5px] hover:text-white"
-              : "hover:text-accent"
-          } transition-all duration-300`}
+              ? "bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 rounded-full p-1.5 hover:bg-emerald-400 hover:text-black hover:border-emerald-400"
+              : "text-white/80 hover:text-emerald-400"
+          } transition-all duration-300 flex items-center justify-center`}
         >
           <social.Icon aria-hidden />
           <span className="sr-only">{social.name}</span>

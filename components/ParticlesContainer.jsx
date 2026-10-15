@@ -3,90 +3,69 @@ import { Particles } from "react-tsparticles";
 import { loadFull } from "tsparticles";
 
 const ParticlesContainer = () => {
-  // init
+  // Inisialisasi particles
   const particlesInit = useCallback(async (engine) => {
     await loadFull(engine);
   }, []);
-
-  const particlesLoaded = useCallback(async () => {}, []);
 
   return (
     <Particles
       className="w-full h-full absolute translate-z-0"
       id="tsparticles"
       init={particlesInit}
-      loaded={particlesLoaded}
       options={{
         fullScreen: { enable: false },
         background: {
-          color: {
-            value: "",
-          },
+          color: { value: "" },
         },
-        fpsLimit: 120,
-        interactivity: {
-          events: {
-            onClick: {
-              enable: false,
-              mode: "push",
-            },
-            onHover: {
-              enable: true,
-              mode: "repulse",
-            },
-            resize: true,
-          },
-          modes: {
-            push: {
-              quantity: 90,
-            },
-            repulse: {
-              distance: 200,
-              duration: 0.4,
-            },
-          },
-        },
+        fpsLimit: 60,
         particles: {
-          color: {
-            value: "#e68e2e",
-          },
-          links: {
-            color: "#f5d393",
-            distance: 150,
-            enable: true,
-            opacity: 0.5,
-            width: 1,
-          },
-          collisions: {
-            enable: true,
-          },
-          move: {
-            direction: "none",
-            enable: true,
-            outMode: {
-              default: "bounce",
-            },
-            random: false,
-            speed: 1,
-            straight: false,
-          },
           number: {
-            density: {
-              enable: true,
-              area: 800,
-            },
-            value: 80,
+            value: 50, // Jumlah partikel dikurangi untuk efek clean
+            density: { enable: true, area: 800 },
           },
-          opacity: {
-            value: 0.5,
+          color: {
+            value: ["#00d4ff", "#0088ff", "#00ffaa"], // Warna gradasi biru-hijau
           },
           shape: {
             type: "circle",
           },
+          opacity: {
+            value: 0.7, // Lebih transparan
+            random: true,
+            anim: { enable: true, speed: 1, opacity_min: 0.3, sync: false },
+          },
           size: {
-            value: {
-              min: 1,
-              max: 5,
+            value: { min: 2, max: 8 }, // Variasi ukuran partikel lebih besar
+            random: true,
+            anim: { enable: true, speed: 3, size_min: 0.3, sync: false },
+          },
+          move: {
+            enable: true,
+            speed: 1,
+            direction: "none",
+            random: false,
+            straight: false,
+            outModes: { default: "out" },
+            attract: { enable: false, rotateX: 600, rotateY: 600 },
+          },
+          links: {
+            enable: false, // Hilangkan garis penghubung
+          },
+        },
+        interactivity: {
+          events: {
+            onHover: {
+              enable: true,
+              mode: "bubble",
+            },
+          },
+          modes: {
+            bubble: {
+              distance: 200,
+              size: 10,
+              duration: 2,
+              opacity: 0.8,
             },
           },
         },
