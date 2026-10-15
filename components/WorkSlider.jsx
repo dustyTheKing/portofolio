@@ -129,36 +129,42 @@ const WorkSlider = () => {
 
       {/* Pop-up Modal Zoom */}
       {selectedImage && (
-        <div 
-          className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4"
+        <div
+          className="fixed inset-0 z-[9999] bg-black/85 backdrop-blur-md flex items-center justify-center p-4 sm:p-6"
           onClick={() => setSelectedImage(null)}
         >
-          <div 
-            className="relative max-w-4xl w-full max-h-[90vh] bg-black/40 rounded-xl overflow-hidden p-2 border border-white/10"
+          <div
+            className="relative max-w-4xl w-full bg-neutral-900/90 rounded-2xl overflow-hidden p-3 border border-white/10 shadow-2xl flex flex-col max-h-[85vh]"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Tombol Close */}
+            {/* Tombol Close - Diposisikan dengan z-index tinggi & touch target aman untuk HP */}
             <button
               onClick={() => setSelectedImage(null)}
-              className="absolute top-4 right-4 z-10 p-2 bg-black/70 hover:bg-black rounded-full text-white transition-all"
+              className="absolute top-3 right-3 sm:top-4 sm:right-4 z-[10000] p-2.5 bg-black/70 hover:bg-black text-white rounded-full transition-all border border-white/20 active:scale-95 touch-manipulation"
+              aria-label="Close modal"
             >
-              <IoClose className="text-2xl" />
+              <IoClose className="text-xl sm:text-2xl" />
             </button>
 
-            {/* Display Gambar Full */}
-            <div className="relative w-full h-[70vh]">
+            {/* Container Gambar Preview */}
+            <div className="relative w-full h-[55vh] sm:h-[65vh] mt-8 sm:mt-0 flex items-center justify-center">
               <Image
                 src={selectedImage.path}
                 alt={selectedImage.title}
                 fill
-                className="object-contain"
+                priority
+                className="object-contain p-2"
               />
             </div>
 
             {/* Info Keterangan Gambar */}
-            <div className="p-4 text-center">
-              <h4 className="text-lg font-bold text-white">{selectedImage.title}</h4>
-              <p className="text-sm text-gray-300">{selectedImage.description}</p>
+            <div className="p-3 sm:p-4 text-center bg-black/40 rounded-b-xl">
+              <h4 className="text-base sm:text-lg font-bold text-white">
+                {selectedImage.title}
+              </h4>
+              <p className="text-xs sm:text-sm text-gray-300 mt-0.5">
+                {selectedImage.description}
+              </p>
             </div>
           </div>
         </div>
